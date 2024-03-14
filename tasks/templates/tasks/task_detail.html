@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager - {{ task_list.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .task-list {
+            width: 250px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-list h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .task-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-card h3 {
+            margin-top: 0;
+        }
+
+        .task-card p {
+            margin-bottom: 0;
+        }
+
+        #createTaskForm {
+            width: 250px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    {% for task_list in task_lists %}
+        <div class="task-list" id="taskList{{ task_list.id }}">
+            <h2>{{ task_list.title }}</h2>
+            {% for task in tasks %}
+                {% if task.task_list_id == task_list.id %}
+                    <div class="task-card" id="task{{ task.id }}">
+                        <h3>{{ task.title }}</h3>
+                        <p>{{ task.description }}</p>
+                        <a href="#" class="edit-task" data-task-id="{{ task.id }}">Edit</a>
+                        <a href="#" class="delete-task" data-task-id="{{ task.id }}">Delete</a>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <form id="createTaskForm">
+        <input type="text" id="taskTitle" placeholder="Task title" required>
+        <textarea id="taskDescription" placeholder="Task description"></textarea>
+        <select id="taskList">
+            {% for task_list in task_lists %}
+                <option value="{{ task_list.id }}">{{ task_list.title }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Create Task</button>
+    </form>
+
+    <script>
+        // Обновите скрипт для взаимодействия с сервером (AJAX) для создания, редактирования и удаления задач
+    </script>
+</body>
+</html>
